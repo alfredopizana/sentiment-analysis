@@ -1,0 +1,24 @@
+{
+  "name": "case-record-app",
+  "version": "1.0.0",
+  "description": "Case Record Management System with Sentiment Analysis Integration",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "sync-types": "node scripts/sync-types.js",
+    "postinstall": "npm run sync-types"
+  },
+  "keywords": ["case-management", "sentiment-analysis", "crisis-management"],
+  "author": "Alfred",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "performance-analyzer-scripts",
+  "version": "1.0.0",
+  "description": "Utility scripts for the Performance Analyzer",
+  "main": "generate-sample-data.js",
+  "scripts": {
+    "generate-data": "node generate-sample-data.js",
+    "generate-small": "node generate-sample-data.js 50 10",
+    "generate-large": "node generate-sample-data.js 500 50"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}

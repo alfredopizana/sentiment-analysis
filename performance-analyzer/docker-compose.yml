@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: performance-analyzer-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: sentiment_performance
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - performance-analyzer-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: performance-analyzer-server
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/sentiment_performance
+      - PORT=5001
+    depends_on:
+      - mongodb
+    networks:
+      - performance-analyzer-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: performance-analyzer-client
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    depends_on:
+      - server
+    networks:
+      - performance-analyzer-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  performance-analyzer-network:
+    driver: bridge
